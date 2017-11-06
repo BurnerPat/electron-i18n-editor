@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Electron i18n Editor</title>
+
+        <link rel="stylesheet" href="./style/style.css">
+    </head>
+
+    <body>
+        <div id="horizon"></div>
+
+        <script>
+            require("babel-register");
+            window.$ = window.jQuery = require("jquery");
+
+            // noinspection JSUnresolvedVariable
+            require("./lib/app").default.init();
+        </script>
+    </body>
+</html>

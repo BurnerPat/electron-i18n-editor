@@ -1,0 +1,20 @@
+{
+    "name": "electron-i18n-editor",
+    "version": "0.0.1-SNAPSHOT",
+    "description": "Fancy i18n editor for *.properties files!",
+    "main": "index.js",
+    "scripts": {
+        "start": "electron -r babel-register ."
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "babel-preset-es2015": "^6.24.1",
+        "babel-register": "^6.26.0",
+        "babel-runtime": "^6.26.0",
+        "electron": "^1.7.9",
+        "font-awesome": "^4.7.0",
+        "fs-extra": "^4.0.2",
+        "jquery": "^3.2.1"
+    }
+}

@@ -1,0 +1,80 @@
+@import "../node_modules/font-awesome/less/font-awesome.less";
+@fa-font-path: "../node_modules/font-awesome/fonts";
+
+html {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+html, body, #horizon {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#horizon {
+    display: flex;
+    flex-direction: row;
+
+    .tree {
+        width: 40%;
+        height: 100%;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+
+    .spacer {
+        width: 3px;
+        background: #000000;
+        height: 100%;
+        cursor: ew-resize;
+    }
+
+    .detail {
+        flex-grow: 1;
+        flex-shrink: 1;
+        height: 100%;
+    }
+}
+
+.tree {
+    overflow-x: auto;
+    overflow-y: scroll;
+
+    ul {
+        padding: 0 0 0 2em;
+        margin: 0;
+        list-style: none;
+
+        &.root {
+            padding: 0;
+            display: block !important;
+        }
+
+        &.collapsed {
+            display: none;
+        }
+
+        &.expanded {
+            display: block;
+        }
+
+        li {
+            margin: 0;
+            padding: 0;
+
+            div.title {
+                display: block;
+                padding: 4px;
+                box-sizing: content-box;
+                border-bottom: 1px solid grey;
+
+                &:hover {
+                    background-color: #ddddff;
+                    cursor: pointer !important;
+                }
+            }
+        }
+    }
+}
