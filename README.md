@@ -19,6 +19,18 @@ There might be more features in the future, however, as this is more like a fun 
 
 If your IDE or editor of choice does not support something like this ;)
 
+## WTF HOW DO I USE THIS?
+
+Fire up your favorite command line or bash shell and enter the following commands (you have to have NodeJS and LESS installed):
+
+```bash
+npm install
+lessc style/style.less style/style.css
+npm start
+```
+
+There might be some fancy electron installer build thingy happening in the future.
+
 ## Can I clone / edit / modify / republish this?
 
 As long as you follow the directions of the Apache-2.0 license, go ahead!
