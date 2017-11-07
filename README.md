@@ -2,6 +2,8 @@
 
 A tiny little i18n (resource bundle) editor written in JS and powered by Electron
 
+![Screenshot](screenshot.png?raw=true)
+
 ## What is it?
 
 It is a resource bundle editor similar to the integrated ones in IntelliJ IDEA and Eclipse.
