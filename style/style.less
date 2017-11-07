@@ -1,9 +1,26 @@
 @import "../node_modules/font-awesome/less/font-awesome.less";
+
 @fa-font-path: "../node_modules/font-awesome/fonts";
+
+@background: #272822;
+@highlight: #3e3d32;
+@highlighter: #5b5d5f;
+@light: #4b6eaf;
+
+@foreground: #f8f8f2;
+@caret: #f8f8f0;
+
+@red: #f92672;
+@yellow: #e6db74;
+@green: #a6e22e;
+@blue: #66d9ef;
+@orange: #fd971f;
 
 html {
     font-family: Arial, sans-serif;
-    font-size: 12px;
+    font-size: 14px;
+    background: @background;
+    color: @foreground;
 }
 
 html, body, #horizon {
@@ -13,9 +30,47 @@ html, body, #horizon {
     height: 100%;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar {
+    font-size: 16px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 4px;
+    border-bottom: 1px solid @caret;
+
+    .item, .spacer {
+        display: inline-block;
+        height: 16px;
+        padding: 4px;
+        margin-right: 8px;
+        border: 1px solid transparent;
+    }
+
+    .item {
+        width: 16px;
+        border-radius: 2px;
+
+        &:hover {
+            background: @highlight;
+            border-color: @highlighter;
+            cursor: pointer;
+        }
+    }
+
+    .spacer {
+        color: @highlighter;
+    }
+}
+
 #horizon {
     display: flex;
     flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
 
     .tree {
         width: 40%;
@@ -26,7 +81,7 @@ html, body, #horizon {
 
     .spacer {
         width: 3px;
-        background: #000000;
+        background: @caret;
         height: 100%;
         cursor: ew-resize;
     }
@@ -64,17 +119,89 @@ html, body, #horizon {
             margin: 0;
             padding: 0;
 
-            div.title {
+            .title {
                 display: block;
                 padding: 4px;
                 box-sizing: content-box;
-                border-bottom: 1px solid grey;
+
+                &.complete {
+                    color: @green;
+                }
+
+                &.empty {
+                    color: @orange;
+                    font-style: italic;
+                }
+
+                &.incomplete {
+                    color: @red;
+                }
+
+                .icon {
+                    font-size: 16px;
+                    width: 16px;
+                    display: inline-block;
+                    margin: 2px;
+
+                    &:hover {
+                        color: @caret;
+                    }
+                }
+
+                .dummy {
+                    height: 100%;
+                    width: 16px;
+                    display: inline-block;
+                }
+
+                .key {
+                    line-height: 16px;
+                    padding: 1em;
+                }
 
                 &:hover {
-                    background-color: #ddddff;
+                    background-color: @highlight;
                     cursor: pointer !important;
                 }
+
+                &.selected {
+                    background-color: @light;
+                }
             }
+        }
+    }
+}
+
+.detail {
+    .box {
+        margin: 1em 0.5em;
+        padding: 0 0.5em 1em 0.5em;
+        border-bottom: 1px dotted @highlight;
+
+        .title {
+            margin-bottom: 1em;
+        }
+
+        input {
+            background: @highlight;
+            border: 1px solid @caret;
+            border-radius: 2px;
+            padding: 4px;
+            color: @caret;
+            width: 100%;
+            box-sizing: content-box;
+            font-family: Hack, Consolas, monospace;
+
+            &:focus {
+                border-color: @yellow;
+                box-shadow: @yellow 0 0 2px;
+            }
+        }
+
+        &.header {
+            border-bottom: 2px solid @caret;
+            margin-bottom: 2em;
+            font-weight: bold;
         }
     }
 }

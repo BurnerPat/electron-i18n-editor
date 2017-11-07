@@ -16,8 +16,6 @@ function createWindow() {
         height: 768
     });
 
-    window.toggleDevTools();
-
     window.setMenu(new Menu());
 
     window.loadURL(url.format({
