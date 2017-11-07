@@ -111,5 +111,5 @@ typings/
 
 # My stuff
 
-style/*.css
+src/style/*.css
 .idea/statistic.xml
