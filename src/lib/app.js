@@ -2,6 +2,7 @@ import {remote} from "electron";
 
 import Bundle from "./i18n/bundle";
 import Formatter from "./i18n/formatter";
+import Export from "./i18n/export";
 
 import Menu from "./menu";
 import Editor from "./editor";
@@ -51,5 +52,21 @@ export default class App {
     static deleteProperty() {
         App._bundle.removeProperties(App._editor.selectedKey);
         App._editor.rebuildTree();
+    }
+
+    static async export(file, format) {
+        if (!App._bundle) {
+            throw new Error("Illegal state");
+        }
+
+        switch (format) {
+            case "xlsx": {
+                await Export.toXLSX(this._bundle, file);
+                break;
+            }
+            default: {
+                throw new Error("Unknown format");
+            }
+        }
     }
 }

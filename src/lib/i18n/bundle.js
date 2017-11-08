@@ -67,6 +67,10 @@ export default class Bundle {
         this._regex = regex;
     }
 
+    getLanguageCodes() {
+        return this.map(e => e.language);
+    }
+
     getAllKeys() {
         return Util.distinct([].concat(...this.map(e => e.properties.keys)));
     }

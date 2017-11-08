@@ -17,7 +17,8 @@
         "electron-squirrel-startup": "^1.0.0",
         "font-awesome": "^4.7.0",
         "fs-extra": "^4.0.2",
-        "jquery": "^3.2.1"
+        "jquery": "^3.2.1",
+        "xlsx": "^0.11.8"
     },
     "devDependencies": {
         "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -42,7 +43,8 @@
             },
             "electronPackagerConfig": {
                 "asar": true,
-                "quiet": false
+                "quiet": false,
+                "packageManager": "yarn"
             },
             "electronWinstallerConfig": {
                 "name": "electron-i18n-editor"

@@ -63,7 +63,7 @@ class Toolbar {
 }
 
 function openFile() {
-    let file = dialog.showOpenDialog({
+    const file = dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [
             {
@@ -71,17 +71,35 @@ function openFile() {
                 extensions: ["properties"]
             }
         ]
-    })[0];
+    })[0]; // TODO: Breaks if the user clicks "Cancel"
 
     App.open(file).catch((e) => {
-        console.error("Failed to open bundle", e);
+        console.error("Failed to open bundle", e); // TODO: Horrible error handling
     });
 }
 
 function saveFile() {
     if (App.isOpen()) {
         App.save().catch((e) => {
-            console.error("Failed to save bundle", e);
+            console.error("Failed to save bundle", e); // TODO: Horrible error handling
+        });
+    }
+}
+
+function exportFile(format) {
+    if (App.isOpen()) {
+        const file = dialog.showSaveDialog({
+            properties: ["saveFile"],
+            filters: [
+                {
+                    name: "Workbook",
+                    extensions: ["xlsx"]
+                }
+            ]
+        }); // TODO: Breaks if the user clicks "Cancel"
+
+        App.export(file, format).catch((e) => {
+            console.error("Failed to export bundle", e); // TODO: Horrible error handling
         });
     }
 }
@@ -102,6 +120,17 @@ export default class Menu {
                     label: "Save",
                     accelerator: "Ctrl+S",
                     click: saveFile
+                },
+                {
+                    label: "Export to",
+                    submenu: [
+                        {
+                            label: "Spreadsheet (XLSX)...",
+                            click() {
+                                exportFile("xlsx");
+                            }
+                        }
+                    ]
                 }
             ]
         }));
