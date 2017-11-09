@@ -1,7 +1,7 @@
 {
     "name": "electron-i18n-editor",
     "productName": "Electron i18n Editor",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Fancy i18n editor for *.properties files!",
     "main": "src/index.js",
     "scripts": {
