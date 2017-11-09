@@ -7,7 +7,8 @@
     "scripts": {
         "start": "electron-forge start",
         "package": "electron-forge package",
-        "make": "electron-forge make"
+        "make": "electron-forge make",
+        "publish": "electron-forge publish"
     },
     "author": "Patrick Jackes",
     "license": "Apache-2.0",
@@ -52,8 +53,8 @@
             "electronInstallerDebian": {},
             "electronInstallerRedhat": {},
             "github_repository": {
-                "owner": "",
-                "name": ""
+                "owner": "burnerpat",
+                "name": "electron-i18n-editor"
             },
             "windowsStoreConfig": {
                 "packageName": ""
