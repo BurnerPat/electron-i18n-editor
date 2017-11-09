@@ -100,7 +100,7 @@ export default class Editor {
 
                 this.refreshStatus(title, e);
 
-                this._bundle.addListener(e.fullKey, () => {
+                this._bundle.addListener(e.path, () => {
                     this.refreshStatus(title, e);
                 });
 
@@ -127,11 +127,11 @@ export default class Editor {
                 }
 
                 title.click((evt) => {
-                    this._selectedKey = e.fullKey;
+                    this._selectedKey = e.path;
                     this._tree.find(".title").removeClass("selected");
                     title.addClass("selected");
 
-                    this.showDetails(e.fullKey);
+                    this.showDetails(e.path);
                     evt.stopPropagation();
                 });
 
@@ -194,8 +194,9 @@ export default class Editor {
         div.removeClass("complete");
         div.removeClass("empty");
         div.removeClass("incomplete");
+        div.removeClass("partial");
 
-        if (this._bundle.isEmpty(e.fullKey)) {
+        if (this._bundle.isEmpty(e.path)) {
             if (!Config.getProperty(Config.Keys.highlightEmptyParentProperties) && e.children.length > 0) {
                 div.addClass("complete");
             }
@@ -203,11 +204,15 @@ export default class Editor {
                 div.addClass("empty");
             }
         }
-        else if (this._bundle.isComplete(e.fullKey)) {
+        else if (this._bundle.isComplete(e.path)) {
             div.addClass("complete");
         }
         else {
             div.addClass("incomplete");
+        }
+
+        if (this._bundle.hasIncompleteChildren(e.path)) {
+            div.addClass("partial");
         }
     }
 }

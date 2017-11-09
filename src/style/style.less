@@ -129,11 +129,15 @@ body {
                 }
 
                 &.empty {
-                    color: @orange;
                     font-style: italic;
                 }
 
-                &.incomplete {
+                &.partial {
+                    color: @orange;
+                }
+
+                &.incomplete,
+                &.partial.incomplete{
                     color: @red;
                 }
 
@@ -165,6 +169,11 @@ body {
 
                 &.selected {
                     background-color: @light;
+                    color: @caret !important;
+
+                    .icon:hover {
+                        color: @foreground;
+                    }
                 }
             }
         }

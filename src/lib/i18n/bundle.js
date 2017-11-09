@@ -4,7 +4,32 @@ import fs from "fs-extra";
 import Util from "./util";
 import Properties from "./properties";
 
-export default class Bundle {
+class BundleStatusCache {
+    constructor(bundle) {
+        this._bundle = bundle;
+        this._status = {};
+    }
+
+    lookup(key) {
+        if (this._status[key]) {
+            return this._status[key];
+        }
+
+        const ref = this._status[key] = {};
+
+        for (const method of ["isEmpty", "isComplete", "hasIncompleteChildren"]) {
+            ref[method] = Bundle.prototype[method].apply(this._bundle, [key]);
+        }
+
+        return ref;
+    }
+
+    invalidate(key) {
+        delete this._status[key];
+    }
+}
+
+class Bundle {
     constructor() {
         this._files = {};
         this._regex = /_([A-Za-z]+)/;
@@ -83,6 +108,14 @@ export default class Bundle {
         return Util.intersection(this.getAllKeys(), ...this.map(e => e.properties.keys));
     }
 
+    getChildren(key) {
+        return this.getAllKeys().filter(e => e.indexOf(key) === 0);
+    }
+
+    hasIncompleteChildren(key) {
+        return this.getChildren(key).reduce((acc, e) => acc || !this.isComplete(key) || !this.hasIncompleteChildren(key), false);
+    }
+
     isComplete(key) {
         let result = true;
         this.map(e => result = result && (e.properties.hasProperty(key)));
@@ -134,12 +167,12 @@ export default class Bundle {
                 let element = ctx.filter(e => e.key === k)[0];
 
                 if (!element) {
-                    const fullKey = key.slice(0, i + 1).join(".");
+                    const path = key.slice(0, i + 1).join(".");
 
                     element = {
                         key: k,
-                        fullKey: fullKey,
-                        values: this.getProperties(fullKey),
+                        path: path,
+                        values: this.getProperties(path),
                         children: []
                     };
 
@@ -164,4 +197,67 @@ export default class Bundle {
             e.properties.removeAllListeners();
         });
     }
+
+    static traverseTree(tree, callback) {
+        for (const e of tree) {
+            callback(e);
+
+            if (e.children.length > 0) {
+                Bundle.traverseTree(e.children, callback);
+            }
+        }
+    }
 }
+
+export default class CachingBundle extends Bundle {
+    constructor() {
+        super();
+
+        this._proxies = {};
+        this._cache = new BundleStatusCache(this);
+    }
+
+    invalidate(key) {
+        this._proxies = {};
+        this._cache.invalidate(key);
+    }
+
+    setProperties(key, values) {
+        super.setProperties(key, values);
+        this.invalidate(key);
+    }
+
+    setProperty(language, key, value) {
+        super.setProperty(language, key, value);
+        this.invalidate(key);
+    }
+
+    removeProperties(key) {
+        super.removeProperties(key);
+        this.invalidate(key);
+    }
+
+    static override(method) {
+        CachingBundle.prototype[method] = function (key) {
+            return this._cache.lookup(key)[method];
+        };
+    }
+
+    static proxify(method) {
+        CachingBundle.prototype[method] = function () {
+            if (!this._proxies[method]) {
+                this._proxies[method] = Bundle.prototype[method].apply(this)
+            }
+
+            return this._proxies[method];
+        };
+    }
+}
+
+CachingBundle.override("isEmpty");
+CachingBundle.override("isComplete");
+CachingBundle.override("hasIncompleteChildren");
+
+CachingBundle.proxify("getAllKeys");
+CachingBundle.proxify("getCompleteKeys");
+CachingBundle.proxify("getIncompleteKeys");

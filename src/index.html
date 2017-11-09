@@ -14,8 +14,21 @@
         <script>
             window.$ = window.jQuery = require("jquery");
 
+            window.onerror = (message, url, line, column, err) => {
+                const plain = {};
+
+                Object.getOwnPropertyNames(err).forEach(p => {
+                    plain[p] = err[p];
+                });
+
+                require("electron").ipcRenderer.send("error", message, url, line, column, plain);
+            };
+
             // noinspection JSUnresolvedVariable
-            require("./lib/app").default.init();
+            import App from "./lib/app";
+            window.App = App;
+
+            App.init();
         </script>
     </body>
 </html>

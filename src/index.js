@@ -1,6 +1,6 @@
 "use strict";
 
-import {app, BrowserWindow, Menu} from "electron";
+import {app, BrowserWindow, Menu, ipcMain} from "electron";
 import path from "path";
 import url from "url";
 
@@ -41,4 +41,10 @@ app.on("activate", () => {
     if (!window) {
         createWindow();
     }
+});
+
+ipcMain.on("error", (e, message, url, line, column) => {
+    console.error("Error in renderer process: " + e);
+    console.error(message);
+    console.error(url + ":" + line + ":" + column);
 });
