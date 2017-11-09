@@ -1,8 +1,6 @@
 language: node_js
 node_js: '6'
-os:
-- linux
-- osx
+os: linux
 dist: trusty
 osx_image: xcode8.3
 sudo: false
@@ -23,7 +21,12 @@ install:
 - yarn install
 script:
 - if test -z "$TRAVIS_TAG"; then yarn run make; fi
-after_success: if test -n "$TRAVIS_TAG"; then yarn run publish; fi
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: yarn run publish --all
+  on:
+    tags: true
 env:
   global:
     secure: Q+p4Tdnm0zxpCRTPpqud4CaErQYtu1sdvjdjGhwzUJiFws4dWC/UZL6S+vwjhV6wwtpPjRiET824od+pp9HKP+ueFlGbd9mfcSxBb3orfQ5iLjNXnN6cb1stwYNDMdPd0gw8A0RawccWz1qrUUYAYx7Er09n1T51KAmNQrsgNudNpcgD9OKoNOh/ROe+6D/bJzPmYRBNu6pAbPgsJSjWdne7ZSQBKZoIBybGf6dlAgu9+Z/XY+MT4IDo2HX87zniliorA9rjizDTcgJFz+asg7KLwfC/pqtyy8MAHvJWGUyLLUPS7FaML6LOqQb5CfVSgGcf+Z1WkYD1L0LE5Wb5GcPkaomF+rn1VG3UQiI/ybTT/prouZcUvH5yxwrS0mYym1fSUG8u0pH3qkBpNbOrlrThXH+d0mavWlnlKVKEc0zzB/8hxE5NkK3M7r+hMzQX6SVAcg2W0wfxcS0wLpYC3pmhOATfltq1boLgBLRop+/he4i2x8fr0qvy1Em+9xBxi1Up1d+JKly5c6OJvg4kC39jHdWmtR5ZS3dFmMi9or5Mzaane2yPem8n8AUqhJlu9P3IDz5j0uCTaWL1OKHTcdmgHjJci6y+P4FiQXzy84HbZHA5g/VvEXFYjP3k5HMr/rHdsq+FoKWYYntBPxiHzYycxFkiO6DNBxNJP85Z6LQ=
