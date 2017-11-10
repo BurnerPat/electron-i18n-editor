@@ -21,6 +21,8 @@ install:
 - yarn install
 script:
 - if test -z "$TRAVIS_TAG"; then yarn run make; fi
+before_deploy:
+- chmod u+x ci/travis-deploy.sh
 deploy:
   provider: script
   skip_cleanup: true
