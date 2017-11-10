@@ -21,6 +21,10 @@ install:
 - yarn install
 script:
 - if test -z "$TRAVIS_TAG"; then yarn run make; fi
+- if test -n "$TRAVIS_TAG"; then yarn run make --platform=win32 --arch=ia32; fi
+- if test -n "$TRAVIS_TAG"; then yarn run make --platform=win32 --arch=x64; fi
+- if test -n "$TRAVIS_TAG"; then yarn run make --platform=linux --arch=ia32; fi
+- if test -n "$TRAVIS_TAG"; then yarn run make --platform=linux --arch=x64; fi
 deploy:
   provider: script
   skip_cleanup: true
