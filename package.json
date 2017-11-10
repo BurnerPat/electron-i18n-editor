@@ -1,7 +1,7 @@
 {
     "name": "electron-i18n-editor",
     "productName": "Electron i18n Editor",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Fancy i18n editor for *.properties files!",
     "main": "src/index.js",
     "scripts": {
@@ -45,7 +45,11 @@
             "electronPackagerConfig": {
                 "asar": true,
                 "quiet": false,
-                "packageManager": "yarn"
+                "packageManager": "yarn",
+                "win32metadata":{
+                    "ProductName": "Electron i18n Editor",
+                    "CompanyName": "Patrick Jackes"
+                }
             },
             "electronWinstallerConfig": {
                 "name": "electron-i18n-editor"
@@ -53,8 +57,8 @@
             "electronInstallerDebian": {},
             "electronInstallerRedhat": {},
             "github_repository": {
-                "owner": "burnerpat",
-                "name": "electron-18n-editor"
+                "owner": "BurnerPat",
+                "name": "electron-i18n-editor"
             },
             "windowsStoreConfig": {
                 "packageName": ""

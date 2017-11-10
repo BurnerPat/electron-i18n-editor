@@ -21,14 +21,14 @@ install:
 - yarn install
 script:
 - if test -z "$TRAVIS_TAG"; then yarn run make; fi
-- if test -n "$TRAVIS_TAG"; then yarn run make --platform=win32 --arch=ia32; fi
-- if test -n "$TRAVIS_TAG"; then yarn run make --platform=win32 --arch=x64; fi
-- if test -n "$TRAVIS_TAG"; then yarn run make --platform=linux --arch=ia32; fi
-- if test -n "$TRAVIS_TAG"; then yarn run make --platform=linux --arch=x64; fi
 deploy:
   provider: script
   skip_cleanup: true
-  script: yarn run publish --all --tag="$TRAVIS_TAG"
+  script:
+    - yarn run publish --platform=win32 --arch=ia32 --tag="$TRAVIS_TAG"
+    - yarn run publish --platform=win32 --arch=x64 --tag="$TRAVIS_TAG"
+    - yarn run publish --platform=linux --arch=ia32 --tag="$TRAVIS_TAG"
+    - yarn run publish --platform=linux --arch=x64 --tag="$TRAVIS_TAG"
   on:
     tags: true
 env:
